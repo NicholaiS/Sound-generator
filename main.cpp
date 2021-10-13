@@ -12,5 +12,7 @@ int main()
     a.PlaySound(777,1600,0.1);
 //    a.Run();
 
+//    Det her er en test
+
     return 0;
 }
