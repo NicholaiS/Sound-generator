@@ -12,6 +12,11 @@ int main()
     a.PlaySound(777,1600,0.1);
 //    a.Run();
 
+<<<<<<< Updated upstream
 //    Det her er en test, juhuuu, pølsemix! det smager godt!
+=======
+//    Det her er en test, juhuuu, pølsemix
+
+>>>>>>> Stashed changes
     return 0;
 }
