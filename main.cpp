@@ -9,10 +9,8 @@
 int main()
 {
     SoundGenerator a;
-    a.PlaySound(777,1600,0.1);
-//    a.Run();
-
-//    Det her er en test, juhuuu
+    a.SetDuration(0.5);
+    a.Run();
 
     return 0;
 }
