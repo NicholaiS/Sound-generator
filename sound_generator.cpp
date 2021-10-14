@@ -2,6 +2,7 @@
 #include "SFML/Audio.hpp"
 #include <math.h>
 
+
 SoundGenerator::SoundGenerator()
 {
 
@@ -29,15 +30,17 @@ short SoundGenerator::SineWave(double time, double freq1, double freq2, double a
     return result;
 }
 
+void SoundGenerator::SetDuration(double s){
+    _duration = s;
+}
+
 void SoundGenerator::PlaySound(double f1, double f2, double amp)
 {
-    sf::RenderWindow window(sf::VideoMode(800,600),"My window");
-
     //Kode skriver her:
     sf::SoundBuffer buffer;
     std::vector<sf::Int16> samples;
 
-    for(double i = 0; i < 44100; i++)
+    for(double i = 0; i < 44100*_duration; i++)
     {
         samples.push_back(SineWave(i, f1, f2, amp));
     }
@@ -48,19 +51,8 @@ void SoundGenerator::PlaySound(double f1, double f2, double amp)
     sound.setBuffer(buffer);
     sound.play();
 
-    //Kode stopper her.
+    while(sound.getStatus()==2){};
 
-    while(window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if(event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-        }
-    }
 }
 
 void SoundGenerator::Movement(direction d)
@@ -69,6 +61,7 @@ void SoundGenerator::Movement(direction d)
     {
         case FORWARD:
         PlaySound(1336, 697, 0.1);
+        sleep(0.5);
         break;
 
         case BACKWARDS:
@@ -81,40 +74,33 @@ void SoundGenerator::Movement(direction d)
 
         case RIGHT:
         PlaySound(1477, 770, 0.1);
-        break;
     }
 }
 
 void SoundGenerator::Run()
 {
-    char input;
+    initscr();
+    printw("hej wasd virker nu");
+    int input;
     do
     {
-        std::cin >> input;
+        input = getch();
+        clear();
 
-        switch(input)
-        {
-        case '0':
-            system("clear");
-            std::cout << "Program ended." << std::endl;
-            break;
-
-        case 'w':
+        if(input == 'w')  {
             Movement(FORWARD);
-            break;
-
-        case 's':
-            Movement(BACKWARDS);
-            break;
-
-        case 'a':
-            Movement(LEFT);
-            break;
-
-        case 'd':
-            Movement(RIGHT);
-            break;
         }
-    }
-    while (input != '0');
+        else if(input=='s') {
+            Movement(BACKWARDS);
+        } else if(input=='a'){
+            Movement(LEFT);
+        } else if(input=='d'){
+            Movement(RIGHT);
+        } else {
+            system("clear");
+            input = '0';
+        };
+        flushinp();
+        refresh();
+    } while (input != '0');
 }
