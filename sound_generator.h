@@ -16,13 +16,14 @@ class SoundGenerator
 {
 public:
     SoundGenerator();
-    void SetDuration(double s);
     void Movement(direction d);
+    void PlaySingle(double f1, double f2);
     void Run();
 private:
-    void PlaySound(double f1, double f2, double amp);
+    void PlayLoop(double f1, double f2);
     short SineWave(double time, double freq1, double freq2, double amp);
-    double _duration = 1; //må ikke komme under 0.3
+    sf::Sound lsound;
+    sf::SoundBuffer lbuffer;
 };
 
 #endif // SOUND_GENERATOR_H

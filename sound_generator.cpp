@@ -30,28 +30,40 @@ short SoundGenerator::SineWave(double time, double freq1, double freq2, double a
     return result;
 }
 
-void SoundGenerator::SetDuration(double s){
-    _duration = s;
-}
 
-void SoundGenerator::PlaySound(double f1, double f2, double amp)
-{
-    //Kode skriver her:
-    sf::SoundBuffer buffer;
-    std::vector<sf::Int16> samples;
+void SoundGenerator::PlaySingle(double f1, double f2){
+    sf::Sound ssound;
+    sf::SoundBuffer sbuffer;
+    std::vector<sf::Int16> ssamples;
 
-    for(double i = 0; i < 44100*_duration; i++)
+    for(double i = 0; i < 44100; i++)
     {
-        samples.push_back(SineWave(i, f1, f2, amp));
+        ssamples.push_back(SineWave(i, f1, f2, 0.1));
     }
 
-    buffer.loadFromSamples(&samples[0], samples.size(), 1, 44100);
+    sbuffer.loadFromSamples(&ssamples[0], ssamples.size(), 1, 44100);
 
-    sf::Sound sound;
-    sound.setBuffer(buffer);
-    sound.play();
+    ssound.setBuffer(sbuffer);
+    ssound.play();
+    while(ssound.getStatus()==2){};
+}
 
-    while(sound.getStatus()==2){};
+void SoundGenerator::PlayLoop(double f1, double f2)
+{
+    if(lsound.getStatus()!=2){
+    std::vector<sf::Int16> samples;
+
+    for(double i = 0; i < 44100; i++)
+    {
+        samples.push_back(SineWave(i, f1, f2, 0.1));
+    }
+
+    lbuffer.loadFromSamples(&samples[0], samples.size(), 1, 44100);
+
+    lsound.setBuffer(lbuffer);
+    lsound.setLoop(true);
+    lsound.play();
+    }
 
 }
 
@@ -60,27 +72,28 @@ void SoundGenerator::Movement(direction d)
     switch(d)
     {
         case FORWARD:
-        PlaySound(1336, 697, 0.1);
-        sleep(0.5);
+        PlayLoop(1336, 697);
         break;
 
         case BACKWARDS:
-        PlaySound(1336, 852, 0.1);
+        PlayLoop(1336, 852);
         break;
 
         case LEFT:
-        PlaySound(1209, 770, 0.1);
+        PlayLoop(1209, 770);
         break;
 
         case RIGHT:
-        PlaySound(1477, 770, 0.1);
+        PlayLoop(1477, 770);
     }
 }
 
 void SoundGenerator::Run()
 {
     initscr();
-    printw("hej wasd virker nu");
+    printw("tryk for at starte");
+    getch();
+    timeout(100);
     int input;
     do
     {
@@ -97,10 +110,7 @@ void SoundGenerator::Run()
         } else if(input=='d'){
             Movement(RIGHT);
         } else {
-            system("clear");
-            input = '0';
+            lsound.stop();
         };
-        flushinp();
-        refresh();
-    } while (input != '0');
+    } while (input != 'e');
 }
