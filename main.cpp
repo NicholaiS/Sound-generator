@@ -9,7 +9,7 @@
 int main()
 {
     SoundGenerator a;
-    a.SetDuration(0.5);
+    a.SetDuration(1);
     a.Run();
 
     return 0;

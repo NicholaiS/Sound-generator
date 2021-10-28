@@ -23,6 +23,8 @@ private:
     void PlaySound(double f1, double f2, double amp);
     short SineWave(double time, double freq1, double freq2, double amp);
     double _duration = 1; //må ikke komme under 0.3
+    sf::Sound sound;
+    sf::SoundBuffer buffer;
 };
 
 #endif // SOUND_GENERATOR_H

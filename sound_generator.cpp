@@ -34,10 +34,10 @@ void SoundGenerator::SetDuration(double s){
     _duration = s;
 }
 
+
 void SoundGenerator::PlaySound(double f1, double f2, double amp)
 {
-    //Kode skriver her:
-    sf::SoundBuffer buffer;
+    if(sound.getStatus()!=2){
     std::vector<sf::Int16> samples;
 
     for(double i = 0; i < 44100*_duration; i++)
@@ -47,11 +47,10 @@ void SoundGenerator::PlaySound(double f1, double f2, double amp)
 
     buffer.loadFromSamples(&samples[0], samples.size(), 1, 44100);
 
-    sf::Sound sound;
     sound.setBuffer(buffer);
+    sound.setLoop(true);
     sound.play();
-
-    while(sound.getStatus()==2){};
+    }
 
 }
 
@@ -61,7 +60,6 @@ void SoundGenerator::Movement(direction d)
     {
         case FORWARD:
         PlaySound(1336, 697, 0.1);
-        sleep(0.5);
         break;
 
         case BACKWARDS:
@@ -80,7 +78,9 @@ void SoundGenerator::Movement(direction d)
 void SoundGenerator::Run()
 {
     initscr();
-    printw("hej wasd virker nu");
+    printw("tryk for at starte");
+    getch();
+    timeout(100);
     int input;
     do
     {
@@ -97,10 +97,7 @@ void SoundGenerator::Run()
         } else if(input=='d'){
             Movement(RIGHT);
         } else {
-            system("clear");
-            input = '0';
+            sound.stop();
         };
-        flushinp();
-        refresh();
-    } while (input != '0');
+    } while (input != 'e');
 }
