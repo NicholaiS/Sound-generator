@@ -30,26 +30,39 @@ short SoundGenerator::SineWave(double time, double freq1, double freq2, double a
     return result;
 }
 
-void SoundGenerator::SetDuration(double s){
-    _duration = s;
-}
 
+void SoundGenerator::PlaySingle(double f1, double f2){
+    sf::Sound ssound;
+    sf::SoundBuffer sbuffer;
+    std::vector<sf::Int16> ssamples;
 
-void SoundGenerator::PlaySound(double f1, double f2, double amp)
-{
-    if(sound.getStatus()!=2){
-    std::vector<sf::Int16> samples;
-
-    for(double i = 0; i < 44100*_duration; i++)
+    for(double i = 0; i < 44100; i++)
     {
-        samples.push_back(SineWave(i, f1, f2, amp));
+        ssamples.push_back(SineWave(i, f1, f2, 0.1));
     }
 
-    buffer.loadFromSamples(&samples[0], samples.size(), 1, 44100);
+    sbuffer.loadFromSamples(&ssamples[0], ssamples.size(), 1, 44100);
 
-    sound.setBuffer(buffer);
-    sound.setLoop(true);
-    sound.play();
+    ssound.setBuffer(sbuffer);
+    ssound.play();
+    while(ssound.getStatus()==2){};
+}
+
+void SoundGenerator::PlayLoop(double f1, double f2)
+{
+    if(lsound.getStatus()!=2){
+    std::vector<sf::Int16> samples;
+
+    for(double i = 0; i < 44100; i++)
+    {
+        samples.push_back(SineWave(i, f1, f2, 0.1));
+    }
+
+    lbuffer.loadFromSamples(&samples[0], samples.size(), 1, 44100);
+
+    lsound.setBuffer(lbuffer);
+    lsound.setLoop(true);
+    lsound.play();
     }
 
 }
@@ -59,19 +72,19 @@ void SoundGenerator::Movement(direction d)
     switch(d)
     {
         case FORWARD:
-        PlaySound(1336, 697, 0.1);
+        PlayLoop(1336, 697);
         break;
 
         case BACKWARDS:
-        PlaySound(1336, 852, 0.1);
+        PlayLoop(1336, 852);
         break;
 
         case LEFT:
-        PlaySound(1209, 770, 0.1);
+        PlayLoop(1209, 770);
         break;
 
         case RIGHT:
-        PlaySound(1477, 770, 0.1);
+        PlayLoop(1477, 770);
     }
 }
 
@@ -97,7 +110,7 @@ void SoundGenerator::Run()
         } else if(input=='d'){
             Movement(RIGHT);
         } else {
-            sound.stop();
+            lsound.stop();
         };
     } while (input != 'e');
 }
