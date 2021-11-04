@@ -13,6 +13,7 @@ class Run : SoundGenerator
 public:
     Run();
     void run();
+private:
     void Movement(direction d);
 };
 
