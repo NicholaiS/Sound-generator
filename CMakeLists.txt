@@ -9,6 +9,6 @@ include_directories("usr/include/ncursesw/")
 include_directories("usr/include/SFML/")
 link_directories("usr/lib/x86_64-linux-gnu")
 
-add_executable(Sound-generator main.cpp sound_generator.h sound_generator.cpp run.h run.cpp)
+add_executable(Sound-generator main.cpp sound_generator.h sound_generator.cpp run.h run.cpp encoder.cpp encoder.h)
 
 target_link_libraries(Sound-generator libsfml-audio.so libsfml-system.so -lncurses)

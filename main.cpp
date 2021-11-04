@@ -6,10 +6,13 @@
 #include "run.h"
 #include "sound_generator.h"
 #include <unistd.h>
+#include "encoder.h"
 
 int main()
 {
-    Run a;
-    a.run();
-    return 0;
+    //Run a;
+    //a.run();
+    encoder e;
+    std::cout << e.decode("1110000000") << std::endl;
+    std::cout << e.decodecheck<< std::endl;
 }
