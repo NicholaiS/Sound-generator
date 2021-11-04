@@ -3,13 +3,13 @@
 #include "SFML/Graphics.hpp"
 #include <vector>
 #include <math.h>
+#include "run.h"
 #include "sound_generator.h"
 #include <unistd.h>
 
 int main()
 {
-    SoundGenerator a;
-    //a.Run();
-    a.PlaySingle(700,800);
+    Run a;
+    a.run();
     return 0;
 }
