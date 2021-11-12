@@ -10,9 +10,6 @@
 
 int main()
 {
-    //Run a;
-    //a.run();
-    encoder e;
-    std::cout << e.decode("1110000000") << std::endl;
-    std::cout << e.decodecheck<< std::endl;
+    Run a;
+    a.run();
 }
