@@ -75,7 +75,7 @@ void Run::run(){
         break;
 
         case KEY_DOWN:
-        if(v!=3){
+        if(v!=4){
         v++;
         updatemenu();
         }
@@ -126,7 +126,7 @@ void Run::updatewasd()
 
 void Run::updatemenu()
 {
-    for(int i=0;i<4;i++){
+    for(int i=0;i<5;i++){
         if(i==v){
             wattron(menuwin,A_REVERSE);
             mvwprintw(menuwin,i+1,1,valg[i].c_str());
@@ -157,6 +157,10 @@ void Run::Menu(int v)
         break;
 
         case 3:
+        break;
+
+        case 4:
+        abort();
         break;
     }
 }

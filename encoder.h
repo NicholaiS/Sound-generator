@@ -1,6 +1,7 @@
 #ifndef ENCODER_H
 #define ENCODER_H
 #include <string>
+#include <bitset>
 
 class encoder
 {
@@ -8,6 +9,8 @@ public:
     encoder();
     std::string encode(std::string i);
     std::string decode(std::string i);
+    int intx(std::string i);
+    int inty(std::string i);
     bool encheckstring(std::string i);
     bool decheckstring(std::string i);
     bool decodecheck;

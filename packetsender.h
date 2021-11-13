@@ -10,6 +10,7 @@ public:
     packetsender();
     void play(int x, int y);
     void replay();
+    void abort();
 private:
     std::string startstop(std::string s);
     std::string senest;

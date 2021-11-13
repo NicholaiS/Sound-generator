@@ -85,6 +85,36 @@ std::string encoder::decode(std::string i){
     return "string ikke 10 lang eller 1/0";
 }
 
+int encoder::intx(std::string i){
+    std::string str;
+    if(encheckstring(i)){
+        for(int j=0;j!=4;j++){
+            str+=i[j];
+        }
+        if(str[0]=='0'){
+        return std::stoi(str,0,2);
+        } else {
+            str.erase(str.begin());
+            return std::stoi(str,0,2)-8;
+        }
+    }
+}
+
+int encoder::inty(std::string i){
+    std::string str;
+    if(encheckstring(i)){
+        for(int j=4;j!=8;j++){
+            str+=i[j];
+        }
+        if(str[0]=='0'){
+        return std::stoi(str,0,2);
+        } else {
+            str.erase(str.begin());
+            return std::stoi(str,0,2)-8;
+        }
+    }
+}
+
 bool encoder::encheckstring(std::string i){
     bool tjek1=false, tjek2=false;
     if(i.size()==(2*n)){
