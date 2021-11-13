@@ -34,12 +34,6 @@ if(encheckstring(i)){
             fs+=kodeword[j];
         }
     }
-
-    std::cout << sh1 << std::endl;
-    std::cout << sh2 << std::endl;
-
-    std::cout << fs << std::endl;
-
     return fs;
 
 } else {

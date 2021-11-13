@@ -1,52 +1,162 @@
 #include "run.h"
+#include <ncurses.h>
 
 Run::Run(){}
 
-void Run::run(){
-    {
-        initscr();
-        printw("tryk for at starte");
-        getch();
-        timeout(100);
-        int input;
-        do
-        {
-            input = getch();
-            clear();
+using namespace std;
 
-            if(input == 'w')  {
-                Movement(FORWARD);
-            }
-            else if(input=='s') {
-                Movement(BACKWARDS);
-            } else if(input=='a'){
-                Movement(LEFT);
-            } else if(input=='d'){
-                Movement(RIGHT);
-            } else {
-                lsound.stop();
-            };
-        } while (input != 'e');
+void Run::run(){
+    // ncurses opsætning
+    initscr();
+    noecho();
+
+    // bruger skærmstørrelsen til a konfigurere mit vindue
+    int ymax, xmax;
+    getmaxyx(stdscr,ymax,xmax);
+
+    //indstiller mine vinduer
+    printw("WASD til at vælge bevægelse for robotten, piletaster for menuen");
+    refresh();
+    txtwin = newwin(5,xmax-12,ymax-7,2);
+    styrwin = newwin(8,15,1,2);
+    menuwin = newwin(20,25,1,xmax-35);
+    box(txtwin,0,0);
+    box(styrwin,0,0);
+    box(menuwin,0,0);
+    mvwprintw(txtwin,1,1,"her kommer der til at stå status på afsendelse og acknowledgments");
+    mvwprintw(styrwin,3,7,"w");
+    mvwprintw(styrwin,4,6,"asd");
+    wrefresh(menuwin);
+    wrefresh(txtwin);
+    wrefresh(styrwin);
+
+    // slår keypad til
+    keypad(menuwin,true);
+
+
+    int c;
+    do{
+    updatemenu();
+    c = wgetch(menuwin);
+    switch(c){
+        case 'w':
+        if(y!=7){
+        y++;
+        updatewasd();
+        }
+        break;
+
+        case 's':
+        if(abs(y)!=7||y==7){
+        y--;
+        updatewasd();
+        }
+        break;
+
+        case 'd':
+        if(x!=7){
+        x++;
+        updatewasd();
+        }
+        break;
+
+        case 'a':
+        if(abs(x)!=7||x==7){
+        x--;
+        updatewasd();
+        }
+        break;
+
+        case KEY_UP:
+        if(v!=0){
+        v--;
+        updatemenu();
+        }
+        break;
+
+        case KEY_DOWN:
+        if(v!=3){
+        v++;
+        updatemenu();
+        }
+        break;
+
+        case 10:
+        Menu(v);
+        break;
+
+    }
+
+    wrefresh(menuwin);
+    wrefresh(txtwin);
+    wrefresh(styrwin);
+    } while(c != 'e');
+
+    //sluk
+    delwin(menuwin);
+    delwin(txtwin);
+    delwin(styrwin);
+    endwin();
+}
+
+void Run::updatewasd()
+{
+    if(y>0){
+        mvwprintw(styrwin,2,7,"%d",y);
+        mvwprintw(styrwin,5,7,"  ");
+    } else if(y<0){
+        mvwprintw(styrwin,5,7,"%d",abs(y));
+        mvwprintw(styrwin,2,7,"  ");
+    } else if(y==0){
+        mvwprintw(styrwin,5,7,"  ");
+        mvwprintw(styrwin,2,7,"  ");
+    }
+
+    if(x>0){
+        mvwprintw(styrwin,4,10,"%d",x);
+        mvwprintw(styrwin,4,4,"  ");
+    }else if(x<0){
+        mvwprintw(styrwin,4,4,"%d",abs(x));
+        mvwprintw(styrwin,4,10,"  ");
+    }else if(x==0){
+        mvwprintw(styrwin,4,4,"  ");
+        mvwprintw(styrwin,4,10,"  ");
     }
 }
 
-void Run::Movement(direction d)
+void Run::updatemenu()
 {
-    switch(d)
+    for(int i=0;i<4;i++){
+        if(i==v){
+            wattron(menuwin,A_REVERSE);
+            mvwprintw(menuwin,i+1,1,valg[i].c_str());
+            wattroff(menuwin,A_REVERSE);
+        } else {
+            mvwprintw(menuwin,i+1,1,valg[i].c_str());
+        }
+    }
+}
+
+
+void Run::Menu(int v)
+{
+    switch(v)
     {
-        case FORWARD:
-        PlayLoop(1336, 697);
+        case 0:
+        play(x,y);
+        x=0;
+        y=0;
+        updatewasd();
         break;
 
-        case BACKWARDS:
-        PlayLoop(1336, 852);
+        case 1:
+        replay();
         break;
 
-        case LEFT:
-        PlayLoop(1209, 770);
+        case 2:
         break;
 
-        case RIGHT:
-        PlayLoop(1477, 770);
+        case 3:
+        break;
     }
 }
