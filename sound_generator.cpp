@@ -70,10 +70,10 @@ void SoundGenerator::PlayLoop(double f1, double f2)
 void SoundGenerator::PlaySequence(std::string q){
     for(std::string::size_type i = 0; i < q.size(); i++){
             if(q[i]=='0'){
-                PlaySingle(1209,697);
+                PlaySingle(1336,941);
             }
             else if(q[i]=='1'){
-                PlaySingle(1633,941);
+                PlaySingle(1477,852);
             }
         }
 

@@ -17,7 +17,7 @@ private:
     int v=0;
     int x=0;
     int y=0;
-    std::string valg[4] = {"play","replay","slower","faster"};
+    std::string valg[5] = {"play","replay","slower","faster","abort"};
     WINDOW * txtwin;
     WINDOW * styrwin;
     WINDOW * menuwin;
