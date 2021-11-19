@@ -3,19 +3,18 @@
 
 Run::Run(){}
 
-using namespace std;
-
 void Run::run(){
     // ncurses opsætning
     initscr();
     noecho();
+    curs_set(0);
 
     // bruger skærmstørrelsen til a konfigurere mit vindue
     int ymax, xmax;
     getmaxyx(stdscr,ymax,xmax);
 
     //indstiller mine vinduer
-    printw("WASD til at vælge bevægelse for robotten, piletaster for menuen");
+    printw("WASD til bevægelse for robotten, piletaster for menuen, enter for vælg");
     refresh();
     txtwin = newwin(5,xmax-12,ymax-7,2);
     styrwin = newwin(8,15,1,2);
@@ -34,58 +33,10 @@ void Run::run(){
     keypad(menuwin,true);
 
 
-    int c;
     do{
     updatemenu();
     c = wgetch(menuwin);
-    switch(c){
-        case 'w':
-        if(y!=7){
-        y++;
-        updatewasd();
-        }
-        break;
-
-        case 's':
-        if(abs(y)!=7||y==7){
-        y--;
-        updatewasd();
-        }
-        break;
-
-        case 'd':
-        if(x!=7){
-        x++;
-        updatewasd();
-        }
-        break;
-
-        case 'a':
-        if(abs(x)!=7||x==7){
-        x--;
-        updatewasd();
-        }
-        break;
-
-        case KEY_UP:
-        if(v!=0){
-        v--;
-        updatemenu();
-        }
-        break;
-
-        case KEY_DOWN:
-        if(v!=4){
-        v++;
-        updatemenu();
-        }
-        break;
-
-        case 10:
-        Menu(v);
-        break;
-
-    }
+    inputswitch(c);
 
     wrefresh(menuwin);
     wrefresh(txtwin);
@@ -126,7 +77,7 @@ void Run::updatewasd()
 
 void Run::updatemenu()
 {
-    for(int i=0;i<5;i++){
+    for(int i=0;i<6;i++){
         if(i==v){
             wattron(menuwin,A_REVERSE);
             mvwprintw(menuwin,i+1,1,valg[i].c_str());
@@ -136,7 +87,6 @@ void Run::updatemenu()
         }
     }
 }
-
 
 void Run::Menu(int v)
 {
@@ -154,13 +104,72 @@ void Run::Menu(int v)
         break;
 
         case 2:
+        play(0,-8);
         break;
 
         case 3:
+        play(-8,0);
         break;
 
         case 4:
         abort();
+        break;
+
+        case 5:
+        c='e';
+        break;
+    }
+}
+
+void Run::inputswitch(int i){
+    switch(i){
+        case 'w':
+        if(y!=7){
+        y++;
+        updatewasd();
+        }
+        break;
+
+        case 's':
+        if(abs(y)!=7||y==7){
+        y--;
+        updatewasd();
+        }
+        break;
+
+        case 'd':
+        if(x!=7){
+        x++;
+        updatewasd();
+        }
+        break;
+
+        case 'a':
+        if(abs(x)!=7||x==7){
+        x--;
+        updatewasd();
+        }
+        break;
+
+        case KEY_UP:
+        if(v!=0){
+        v--;
+        updatemenu();
+        }
+        break;
+
+        case KEY_DOWN:
+        if(v!=5){
+        v++;
+        updatemenu();
+        }
+        break;
+
+        case 10:
+        Menu(v);
+        break;
+
+        default:
         break;
     }
 }

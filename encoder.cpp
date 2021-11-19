@@ -85,7 +85,7 @@ std::string encoder::decode(std::string i){
     return "string ikke 10 lang eller 1/0";
 }
 
-int encoder::intx(std::string i){
+int encoder::inty(std::string i){
     std::string str;
     if(encheckstring(i)){
         for(int j=0;j!=4;j++){
@@ -100,7 +100,7 @@ int encoder::intx(std::string i){
     }
 }
 
-int encoder::inty(std::string i){
+int encoder::intx(std::string i){
     std::string str;
     if(encheckstring(i)){
         for(int j=4;j!=8;j++){
