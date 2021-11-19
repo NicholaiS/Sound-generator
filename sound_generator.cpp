@@ -68,12 +68,13 @@ void SoundGenerator::PlayLoop(double f1, double f2)
 }
 
 void SoundGenerator::PlaySequence(std::string q){
+    usleep(2900000);
     for(std::string::size_type i = 0; i < q.size(); i++){
             if(q[i]=='0'){
-                PlaySingle(1336,941);
+                PlaySingle(941,1633);
             }
             else if(q[i]=='1'){
-                PlaySingle(1477,852);
+                PlaySingle(852,1477);
             }
         }
 

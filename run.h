@@ -14,10 +14,12 @@ private:
     void Menu(int v);
     void updatemenu();
     void updatewasd();
+    void inputswitch(int i);
     int v=0;
     int x=0;
     int y=0;
-    std::string valg[5] = {"play","replay","slower","faster","abort"};
+    int c;
+    std::string valg[6] = {"Play","Replay","Slower","Faster","Stopbit","Close"};
     WINDOW * txtwin;
     WINDOW * styrwin;
     WINDOW * menuwin;

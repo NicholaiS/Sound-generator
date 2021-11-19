@@ -11,22 +11,19 @@ void packetsender::play(int x, int y){
     std::string strxy=strx+stry;
     senest=encode(strxy);
 
-    PlaySingle(770,1209);
+    PlaySingle(697,1209);
     PlaySequence(senest);
     PlaySingle(770,1336);
 }
 
 void packetsender::replay(){
-    PlaySingle(770,1209);
+    PlaySingle(697,1209);
     PlaySequence(senest);
     PlaySingle(770,1336);
+
 }
 
 void packetsender::abort(){
-    PlaySingle(852,1336);
-    PlaySingle(852,1336);
-    PlaySingle(852,1336);
-    PlaySingle(852,1336);
-    PlaySingle(852,1336);
-    PlaySingle(852,1336);
+    PlaySingle(770,1336);
+    PlaySingle(770,1336);
 }

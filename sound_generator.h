@@ -17,7 +17,7 @@ public:
 private:
     short SineWave(double time, double freq1, double freq2, double amp);
     sf::SoundBuffer lbuffer;
-    double duration=0.5;
+    double duration=0.3;
 };
 
 #endif // SOUND_GENERATOR_H
