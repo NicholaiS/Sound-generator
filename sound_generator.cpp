@@ -67,8 +67,12 @@ void SoundGenerator::PlayLoop(double f1, double f2)
 
 }
 
+void SoundGenerator::setduration(double d){
+    duration=d;
+}
+
 void SoundGenerator::PlaySequence(std::string q){
-    usleep(2900000);
+    usleep(870000);
     for(std::string::size_type i = 0; i < q.size(); i++){
             if(q[i]=='0'){
                 PlaySingle(941,1633);
