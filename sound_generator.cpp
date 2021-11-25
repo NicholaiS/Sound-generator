@@ -30,7 +30,6 @@ short SoundGenerator::SineWave(double time, double freq1, double freq2, double a
     return result;
 }
 
-
 void SoundGenerator::PlaySingle(double f1, double f2){
     sf::Sound ssound;
     sf::SoundBuffer sbuffer;
@@ -48,31 +47,12 @@ void SoundGenerator::PlaySingle(double f1, double f2){
     while(ssound.getStatus()==2){};
 }
 
-void SoundGenerator::PlayLoop(double f1, double f2)
-{
-    if(lsound.getStatus()!=2){
-    std::vector<sf::Int16> samples;
-
-    for(double i = 0; i < 44100; i++)
-    {
-        samples.push_back(SineWave(i, f1, f2, 0.1));
-    }
-
-    lbuffer.loadFromSamples(&samples[0], samples.size(), 1, 44100);
-
-    lsound.setBuffer(lbuffer);
-    lsound.setLoop(true);
-    lsound.play();
-    }
-
-}
-
 void SoundGenerator::setduration(double d){
     duration=d;
 }
 
 void SoundGenerator::PlaySequence(std::string q){
-    usleep(870000);
+    usleep(862500);
     for(std::string::size_type i = 0; i < q.size(); i++){
             if(q[i]=='0'){
                 PlaySingle(941,1633);

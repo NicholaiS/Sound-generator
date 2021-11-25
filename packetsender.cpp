@@ -25,7 +25,7 @@ void packetsender::replay(){
 
 }
 
-void packetsender::abort(){
+void packetsender::stopbit(){
     PlaySingle(770,1336);
     PlaySingle(770,1336);
 }

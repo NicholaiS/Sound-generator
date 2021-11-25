@@ -112,7 +112,7 @@ void Run::Menu(int v)
         break;
 
         case 4:
-        abort();
+        stopbit();
         break;
 
         case 5:
