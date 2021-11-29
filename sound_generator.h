@@ -12,12 +12,11 @@ public:
     SoundGenerator();
     void PlaySingle(double f1, double f2);
     void PlaySequence(std::string q);
-    void PlayLoop(double f1, double f2);
-    sf::Sound lsound;
+    void setduration(double d);
 private:
     short SineWave(double time, double freq1, double freq2, double amp);
-    sf::SoundBuffer lbuffer;
-    double duration=0.3;
+    double duration=0.2;
+    sf::Sound sound;
 };
 
 #endif // SOUND_GENERATOR_H

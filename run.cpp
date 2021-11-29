@@ -88,14 +88,74 @@ void Run::updatemenu()
     }
 }
 
+void Run::updatetxt(message m){
+    wclear(txtwin);
+    box(txtwin,0,0);
+    displaytxt(m,0);
+    displaytxt(second,1);
+    displaytxt(third,2);
+    third = second;
+    second = m;
+    wrefresh(txtwin);
+}
+
+void Run::displaytxt(message n, int i){
+    switch(n)
+    {
+        case Null:
+        mvwprintw(txtwin,i+1,1," - ");
+        break;
+
+        case Idle:
+        mvwprintw(txtwin,i+1,1,"Waiting for a command");
+        break;
+
+        case SPlaying:
+        mvwprintw(txtwin,i+1,1,"Sending instructions...");
+        break;
+
+        case DPlaying:
+        mvwprintw(txtwin,i+1,1,"Instructions sent, waiting for a reponse");
+        break;
+
+        case Response1:
+        mvwprintw(txtwin,i+1,1,"Instructions sent with no problems");
+        break;
+
+        case Response2:
+        mvwprintw(txtwin,i+1,1,"Instructions not understood, please move closer and replay");
+        break;
+
+        case Response3:
+        mvwprintw(txtwin,i+1,1,"Instructions not understood, please replay");
+        break;
+
+        case NoResponse:
+        mvwprintw(txtwin,i+1,1,"Response not understood, please replay if the robot hasn't moved");
+        break;
+
+        case Instructions:
+        mvwprintw(txtwin,i+1,1,"WASD: move robot, up/down: move in menu, enter: chose in menu");
+        break;
+
+        default:
+        break;
+    }
+}
+
 void Run::Menu(int v)
 {
     switch(v)
     {
         case 0:
+        updatetxt(SPlaying);
         play(x,y);
         x=0;
         y=0;
+        updatetxt(DPlaying);
+        usleep(500000);
+        checkresponse();
+        //mvwprintw(txtwin,1,1,senest.c_str());  //kan være nyttigt til at teste
         updatewasd();
         break;
 
@@ -104,20 +164,47 @@ void Run::Menu(int v)
         break;
 
         case 2:
+        updatetxt(SPlaying);
         play(0,-8);
+        updatetxt(DPlaying);
+        checkresponse();
         break;
 
         case 3:
+        updatetxt(SPlaying);
         play(-8,0);
+        updatetxt(DPlaying);
+        checkresponse();
         break;
 
         case 4:
-        abort();
+        updatetxt(Instructions);
         break;
 
         case 5:
         c='e';
         break;
+    }
+}
+
+void Run::checkresponse(){
+    switch(ResponseRecognition())
+    {
+     case 0:
+     updatetxt(NoResponse);
+     break;
+
+     case 1:
+     updatetxt(Response1);
+     break;
+
+     case 2:
+     updatetxt(Response2);
+     break;
+
+     case 3:
+     updatetxt(Response2);
+     break;
     }
 }
 
