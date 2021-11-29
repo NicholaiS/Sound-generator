@@ -11,7 +11,6 @@ public:
     void play(int x, int y);
     void replay();
     void stopbit();
-private:
     std::string senest;
 };
 

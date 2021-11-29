@@ -19,13 +19,10 @@ void packetsender::play(int x, int y){
 }
 
 void packetsender::replay(){
+    setduration(0.02);
     PlaySingle(697,1209);
+    setduration(0.2);
     PlaySequence(senest);
     PlaySingle(770,1336);
 
-}
-
-void packetsender::stopbit(){
-    PlaySingle(770,1336);
-    PlaySingle(770,1336);
 }
