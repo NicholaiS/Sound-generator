@@ -153,9 +153,9 @@ void Run::Menu(int v)
         x=0;
         y=0;
         updatetxt(DPlaying);
-        usleep(500000);
+        usleep(2300000);
         checkresponse();
-        //mvwprintw(txtwin,1,1,senest.c_str());  //kan være nyttigt til at teste
+        mvwprintw(txtwin,1,1,senest.c_str());  //kan være nyttigt til at teste
         updatewasd();
         break;
 
@@ -179,6 +179,7 @@ void Run::Menu(int v)
 
         case 4:
         updatetxt(Instructions);
+        startbit();
         break;
 
         case 5:
@@ -188,7 +189,22 @@ void Run::Menu(int v)
 }
 
 void Run::checkresponse(){
-    switch(ResponseRecognition())
+    int i;
+    if(ResponseRecognition()==0){
+        if(ResponseRecognition()==0){
+            if(ResponseRecognition()==0){
+                if(ResponseRecognition()==0){
+                    if(ResponseRecognition()==0){
+                            if(ResponseRecognition()==0){
+        i=ResponseRecognition();
+                        } else {i=ResponseRecognition();};
+                    } else {i=ResponseRecognition();};
+                } else {i=ResponseRecognition();};
+            } else {i=ResponseRecognition();};
+        } else {i=ResponseRecognition();};
+    } else {i=ResponseRecognition();};
+
+    switch(i)
     {
      case 0:
      updatetxt(NoResponse);

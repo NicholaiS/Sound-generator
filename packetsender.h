@@ -10,7 +10,7 @@ public:
     packetsender();
     void play(int x, int y);
     void replay();
-    void stopbit();
+    void startbit();
     std::string senest;
 };
 

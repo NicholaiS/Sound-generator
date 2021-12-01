@@ -42,9 +42,9 @@ void SoundGenerator::PlaySingle(double f1, double f2){
         ssamples.push_back(SineWave(i, f1, f2, 0.1));
     }
 
-    for(double i = 0; i < j; i++)
+    for(double i = 0; i < j; i++)  //ganger med 1.85 for at kompensere for fald i amplitude
     {
-        ssamples[i]=ssamples[i]*(0.54+0.46*cos((i*M_PI)/j));
+        ssamples[i]=ssamples[i]*1.85*(0.54+0.46*cos((i*M_PI)/j));
     }
 
     sbuffer.loadFromSamples(&ssamples[0], ssamples.size(), 1, 44100);
