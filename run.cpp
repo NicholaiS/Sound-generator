@@ -115,7 +115,7 @@ void Run::displaytxt(message n, int i){
         break;
 
         case DPlaying:
-        mvwprintw(txtwin,i+1,1,"Instructions sent, waiting for a reponse");
+        mvwprintw(txtwin,i+1,1,"Instructions sent, waiting for a response");
         break;
 
         case Response1:
@@ -155,7 +155,7 @@ void Run::Menu(int v)
         updatetxt(DPlaying);
         usleep(2300000);
         checkresponse();
-        mvwprintw(txtwin,1,1,senest.c_str());  //kan være nyttigt til at teste
+        //mvwprintw(txtwin,1,1,senest.c_str());  //kan være nyttigt til at teste
         updatewasd();
         break;
 
@@ -190,19 +190,13 @@ void Run::Menu(int v)
 
 void Run::checkresponse(){
     int i;
-    if(ResponseRecognition()==0){
-        if(ResponseRecognition()==0){
-            if(ResponseRecognition()==0){
-                if(ResponseRecognition()==0){
-                    if(ResponseRecognition()==0){
-                            if(ResponseRecognition()==0){
+
+    for(int j=0; j<7;j++){
         i=ResponseRecognition();
-                        } else {i=ResponseRecognition();};
-                    } else {i=ResponseRecognition();};
-                } else {i=ResponseRecognition();};
-            } else {i=ResponseRecognition();};
-        } else {i=ResponseRecognition();};
-    } else {i=ResponseRecognition();};
+        if(i!=0){
+            j=8;
+        }
+    }
 
     switch(i)
     {

@@ -14,19 +14,21 @@ void packetsender::play(int x, int y){
     setduration(0.04);
     PlaySingle(697,1209);
     setduration(0.2);
+    usleep(862500);
     PlaySequence(senest);
-    PlaySingle(770,1336);
+    //PlaySingle(770,1336); can be used for testing
 }
 
 void packetsender::replay(){
-    setduration(0.02);
+    setduration(0.04);
     PlaySingle(697,1209);
     setduration(0.2);
+    usleep(862500);
     PlaySequence(senest);
-    PlaySingle(770,1336);
-
+    //PlaySingle(770,1336); can be used for testing
 }
 
+// used when testing the startbit
 void packetsender::startbit(){
     setduration(0.1);
     PlaySingle(697,1209);
