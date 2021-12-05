@@ -28,7 +28,7 @@ private:
     const sf::Int16* samples;
     std::size_t samplecount;
     int SamplingRate = 44100;
-    double BackgroundNoiseCap = 80.0;
+    double BackgroundNoiseCap = 20.0;
 };
 
 #endif // ACK_RECEIVER_H

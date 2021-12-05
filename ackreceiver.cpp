@@ -21,7 +21,7 @@ void Response::StartRecording()
 {
     unsigned int sampleRate = 44100;
     recorder.start(sampleRate);
-    //std::cout << "Recording ..." << std::endl;        useful for testing the timing
+    //std::cout << "Recording ..." << std::endl;        //useful for testing the timing
 }
 
 void Response::StopRecording()
@@ -31,7 +31,7 @@ void Response::StopRecording()
     sound.setBuffer(buffer);
     samples = buffer.getSamples();
     samplecount = buffer.getSampleCount();
-    //std::cout << "Recording stopped" << std::endl;    useful for testing timing
+    //std::cout << "Recording stopped" << std::endl;    //useful for testing timing
 }
 
 double Response::GoertzelAlgorithm(int SampelSize, int TargetFreq, const sf::Int16* Data)
@@ -111,9 +111,8 @@ int Response::ResponseRecognition()
 //    if(StartBitTest())
 //    {
 //        std::cout << "Startbit fundet" << std::endl;
-            usleep(2000000);
             StartRecording();
-            usleep(750000);
+            usleep(150000);
 
             StopRecording();
 
@@ -150,7 +149,7 @@ void Response::PlaybackTest()
     std::cout << "Done ..." << std::endl;
 }
 
-bool Response::StartBitTest()
+bool Response::StartBitTest() //implemented in case a startbit was used, it wasn't
 {
     std::cout << "Waiting for start bit" << std::endl;
     double DTMF1Mag;
@@ -158,7 +157,7 @@ bool Response::StartBitTest()
     double DTMFDMag;
     do
     {
-        usleep(75000);
+        usleep(100000);
         StopRecording();
         //DTMFTest For Start Bittet:
         DTMF1Mag = GoertzelAlgorithm(samplecount, 697, samples) + GoertzelAlgorithm(samplecount, 1209, samples);

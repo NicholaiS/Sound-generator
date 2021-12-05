@@ -42,9 +42,9 @@ void SoundGenerator::PlaySingle(double f1, double f2){
         ssamples.push_back(SineWave(i, f1, f2, 0.1));
     }
 
-    for(double i = 0; i < j; i++)
+    for(double i = 0; i < j; i++)  //hamming window multiplyed på 1.85 to compensate for amplitude
     {
-        ssamples[i]=ssamples[i]*(0.54+0.46*cos((i*M_PI)/j));
+        ssamples[i]=ssamples[i]*1.85*(0.54+0.46*cos((i*M_PI)/j));
     }
 
     sbuffer.loadFromSamples(&ssamples[0], ssamples.size(), 1, 44100);
@@ -59,7 +59,6 @@ void SoundGenerator::setduration(double d){
 }
 
 void SoundGenerator::PlaySequence(std::string q){
-    usleep(862500);
     for(std::string::size_type i = 0; i < q.size(); i++){
             if(q[i]=='0'){
                 PlaySingle(941,1633);

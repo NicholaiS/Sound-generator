@@ -29,7 +29,7 @@ private:
     message second, third;
     std::string valg[6] = {"Play","Replay","Slower","Faster","Instructions","Close"};
     WINDOW * txtwin;
-    WINDOW * styrwin;
+    WINDOW * controlwin;
     WINDOW * menuwin;
 };
 
