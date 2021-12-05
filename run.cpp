@@ -14,64 +14,61 @@ void Run::run(){
     getmaxyx(stdscr,ymax,xmax);
 
     //indstiller mine vinduer
-    printw("WASD til bevægelse for robotten, piletaster for menuen, enter for vælg");
     refresh();
     txtwin = newwin(5,xmax-12,ymax-7,2);
-    styrwin = newwin(8,15,1,2);
+    controlwin = newwin(8,15,1,2);
     menuwin = newwin(20,25,1,xmax-35);
     box(txtwin,0,0);
-    box(styrwin,0,0);
+    box(controlwin,0,0);
     box(menuwin,0,0);
-    mvwprintw(txtwin,1,1,"her kommer der til at stå status på afsendelse og acknowledgments");
-    mvwprintw(styrwin,3,7,"w");
-    mvwprintw(styrwin,4,6,"asd");
+    mvwprintw(controlwin,3,7,"w");
+    mvwprintw(controlwin,4,6,"asd");
     wrefresh(menuwin);
     wrefresh(txtwin);
-    wrefresh(styrwin);
+    wrefresh(controlwin);
 
     // slår keypad til
     keypad(menuwin,true);
 
-
-    do{
     updatemenu();
+    do{
     c = wgetch(menuwin);
     inputswitch(c);
 
     wrefresh(menuwin);
     wrefresh(txtwin);
-    wrefresh(styrwin);
+    wrefresh(controlwin);
     } while(c != 'e');
 
     //sluk
     delwin(menuwin);
     delwin(txtwin);
-    delwin(styrwin);
+    delwin(controlwin);
     endwin();
 }
 
 void Run::updatewasd()
 {
     if(y>0){
-        mvwprintw(styrwin,2,7,"%d",y);
-        mvwprintw(styrwin,5,7,"  ");
+        mvwprintw(controlwin,2,7,"%d",y);
+        mvwprintw(controlwin,5,7,"  ");
     } else if(y<0){
-        mvwprintw(styrwin,5,7,"%d",abs(y));
-        mvwprintw(styrwin,2,7,"  ");
+        mvwprintw(controlwin,5,7,"%d",abs(y));
+        mvwprintw(controlwin,2,7,"  ");
     } else if(y==0){
-        mvwprintw(styrwin,5,7,"  ");
-        mvwprintw(styrwin,2,7,"  ");
+        mvwprintw(controlwin,5,7,"  ");
+        mvwprintw(controlwin,2,7,"  ");
     }
 
     if(x>0){
-        mvwprintw(styrwin,4,10,"%d",x);
-        mvwprintw(styrwin,4,4,"  ");
+        mvwprintw(controlwin,4,10,"%d",x);
+        mvwprintw(controlwin,4,4,"  ");
     }else if(x<0){
-        mvwprintw(styrwin,4,4,"%d",abs(x));
-        mvwprintw(styrwin,4,10,"  ");
+        mvwprintw(controlwin,4,4,"%d",abs(x));
+        mvwprintw(controlwin,4,10,"  ");
     }else if(x==0){
-        mvwprintw(styrwin,4,4,"  ");
-        mvwprintw(styrwin,4,10,"  ");
+        mvwprintw(controlwin,4,4,"  ");
+        mvwprintw(controlwin,4,10,"  ");
     }
 }
 
@@ -167,14 +164,22 @@ void Run::Menu(int v)
         updatetxt(SPlaying);
         play(0,-8);
         updatetxt(DPlaying);
+        usleep(2300000);
         checkresponse();
+        //mvwprintw(txtwin,1,1,senest.c_str());  //kan være nyttigt til at teste
+        updatewasd();
+        updatetxt(SPlaying);
         break;
 
         case 3:
         updatetxt(SPlaying);
-        play(-8,0);
+        play(0,-8);
         updatetxt(DPlaying);
+        usleep(2300000);
         checkresponse();
+        //mvwprintw(txtwin,1,1,senest.c_str());  //kan være nyttigt til at teste
+        updatewasd();
+        updatetxt(SPlaying);
         break;
 
         case 4:
